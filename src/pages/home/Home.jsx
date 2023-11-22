@@ -1,49 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Bed from "../../assets/svg/Bed";
-import Bathroom from "../../assets/svg/Bathroom";
-import XMark from "../../assets/svg/XMark";
-import HomeIcon from "../../assets/svg/HomeIcon";
 import ReactSelect from "react-select";
+import { getAllProperties } from "../../apiClient/property";
+import PropertyCard from "./propertyCard/PropertyCard";
+import { dummyStateData, propertyDataType } from "../../data/dummyData";
 
-const dummyStateData = [
-  {
-    id: 1,
-    name: "Maharastra",
-  },
-  {
-    id: 2,
-    name: "Rajsthan",
-  },
-  {
-    id: 3,
-    name: "Bihar",
-  },
-  {
-    id: 4,
-    name: "Madhay Pradesh",
-  },
-  {
-    id: 5,
-    name: "Karnatka",
-  },
-];
-
-const propertyDataType = [
-  {
-    id: 1,
-    name: "Commercial",
-  },
-  {
-    id: 2,
-    name: "Industrial",
-  },
-  {
-    id: 3,
-    name: "Housing",
-  },
-];
 
 const formateOptions = (states) => {
   return states?.map((state) => {
@@ -67,6 +29,14 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState();
   const [price, setPrice] = useState(5000);
   const [query, setQuery] = useState("");
+  const [propertyList, setPropertyList] = useState([]);
+  useEffect(()=>{
+    getAllProperties().then((res)=>{
+      setPropertyList(res?.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  },[])
 
   return (
     <div className="mx-[100px] flex flex-col mt-10 gap-6">
@@ -74,12 +44,12 @@ const Home = () => {
         <input
           type="text"
           value={query}
-          onChange={(e)=> setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search here for properties"
           className="w-full h-10 rounded-lg px-4 py-2 border-blue-300 border focus:outline-none focus:border-blue-500"
         />
       </div>
-      <div className="flex w-full bg-gray-200 rounded-lg py-4 px-4 gap-4">
+      <div className="flex flex-col lg:flex-row bg-gray-200 rounded-lg py-4 px-4 gap-4">
         <div className="w-[200px] h-10 flex">
           <ReactSelect
             placeholder="Select Location"
@@ -129,126 +99,19 @@ const Home = () => {
           Apply
         </button>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-8 w-full">
-        <div className="flex flex-col w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border-2">
-          <div className="flex h-[65%] w-full bg-red-200 rounded-t-lg object-cover">
-            <img
-              src="https://reunionhq.in/blog/content/images/size/w1200/2023/09/real-estate-good-view-malaysia-2022-11-11-20-08-16-utc.jpg"
-              alt="img"
-              className="rounded-t-lg w-full"
-            />
-          </div>
-
-          <div className="h-[35%] w-full bg-gray-50 rounded-b-lg px-4 py-2">
-            <div className="flex gap-1 items-center">
-              <p className="font-normal text-sm text-gray-600">Price</p>
-              <p className="font-semibold text-lg text-blue-500">5000</p>
-            </div>
-            <div className="flex flex-col">
-              <p className="font-semibold text-lg">Property name</p>
-              <p className="font-normal text-sm text-gray-500">Address</p>
-            </div>
-            <div className="flex border-t-2 mt-3 justify-between">
-              <div className="flex gap-2 items-center">
-                <Bed /> 2 Beds
-              </div>
-              <div className="flex gap-2 items-center">
-                <Bathroom /> 2 Bathroom
-              </div>
-              <div className="flex gap-2 items-center">
-                <HomeIcon />
-                <div className="flex gap-1 items-center">
-                  <p>2 </p>
-                  <XMark />
-                  <p>2</p>
-                  <p>Area</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border-2">
-          <div className="h-[65%] w-full bg-red-200 rounded-t-lg">
-            <img
-              src="https://reunionhq.in/blog/content/images/size/w1200/2023/09/real-estate-good-view-malaysia-2022-11-11-20-08-16-utc.jpg"
-              alt="img"
-              className="rounded-t-lg"
-            />
-          </div>
-
-          <div className="h-[35%] w-full bg-gray-50 rounded-b-lg px-4 py-2">
-            <div className="flex gap-1 items-center">
-              <p className="font-normal text-sm text-gray-600">Price</p>
-              <p className="font-semibold text-lg text-blue-500">5000</p>
-            </div>
-            <div className="flex flex-col">
-              <p className="font-semibold text-lg">Property name</p>
-              <p className="font-normal text-sm text-gray-500">Address</p>
-            </div>
-            <div className="flex border-t-2 mt-3 justify-between">
-              <div className="flex gap-2 items-center">
-                <Bed /> 2 Beds
-              </div>
-              <div className="flex gap-2 items-center">
-                <Bathroom /> 2 Bathroom
-              </div>
-              <div className="flex gap-2 items-center">
-                <HomeIcon />
-                <div className="flex gap-1 items-center">
-                  <p>2 </p>
-                  <XMark />
-                  <p>2</p>
-                  <p>Area</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border-2">
-          <div className="h-[65%] w-full bg-red-200 rounded-t-lg">
-            <img
-              src="https://reunionhq.in/blog/content/images/size/w1200/2023/09/real-estate-good-view-malaysia-2022-11-11-20-08-16-utc.jpg"
-              alt="img"
-              className="rounded-t-lg"
-            />
-          </div>
-
-          <div className="h-[35%] w-full bg-gray-50 rounded-b-lg px-4 py-2">
-            <div className="flex gap-1 items-center">
-              <p className="font-normal text-sm text-gray-600">Price</p>
-              <p className="font-semibold text-lg text-blue-500">5000</p>
-            </div>
-            <div className="flex flex-col">
-              <p className="font-semibold text-lg">Property name</p>
-              <p className="font-normal text-sm text-gray-500">Address</p>
-            </div>
-            <div className="flex border-t-2 mt-3 justify-between">
-              <div className="flex gap-2 items-center">
-                <Bed /> 2 Beds
-              </div>
-              <div className="flex gap-2 items-center">
-                <Bathroom /> 2 Bathroom
-              </div>
-              <div className="flex gap-2 items-center">
-                <HomeIcon />
-                <div className="flex gap-1 items-center">
-                  <p>2 </p>
-                  <XMark />
-                  <p>2</p>
-                  <p>Area</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border"></div>
-        <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border"></div>
-        <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border"></div>
-        <div className="w-full h-[400px] bg-gray-200 rounded-lg shadow-md border-gray-300 hover:border-blue-300 border"></div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mb-20">
+        {propertyList?.map((property)=>{
+          return (
+            <PropertyCard property={property}/>
+          );
+        })}
+        
       </div>
     </div>
   );
 };
 
 export default Home;
+
+
+

@@ -3,7 +3,7 @@ import React from 'react'
 const Header = () => {
   return (
     <header
-      className="bg-white p-4 flex justify-between items-center h-14 sticky top-0"
+      className="bg-white p-4 flex justify-between items-center h-14 sticky top-0 z-10"
       style={{
         boxShadow:
           "0px 4px 8px -2px rgba(16, 24, 40, 0.1), 0px 2px 4px -2px rgba(16, 24, 40, 0.06)",
