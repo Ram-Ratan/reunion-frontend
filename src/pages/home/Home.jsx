@@ -72,7 +72,7 @@ const Home = () => {
           />
         </div>
 
-        <div>
+        <div className="w-[200px] h-10 flex">
           <ReactDatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -100,12 +100,9 @@ const Home = () => {
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mb-20">
-        {propertyList?.map((property)=>{
-          return (
-            <PropertyCard property={property}/>
-          );
+        {propertyList?.map((property) => {
+          return <PropertyCard property={property} />;
         })}
-        
       </div>
     </div>
   );
