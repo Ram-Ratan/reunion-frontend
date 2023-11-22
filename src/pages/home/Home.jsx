@@ -39,7 +39,7 @@ const Home = () => {
   },[])
 
   return (
-    <div className="mx-[100px] flex flex-col mt-10 gap-6">
+    <div className="mx-[10px] md:mx-[100px] flex flex-col mt-10 gap-6">
       <div className="w-full">
         <input
           type="text"
